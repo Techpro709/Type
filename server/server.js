@@ -4,8 +4,8 @@ const app = express();
 const GameEngine = require("./GameEngine");
 
 const gameEngine = new GameEngine();
-const server = app.listen(4000);
-console.log("Server running on 4000");
+const server = app.listen(80);
+console.log("Server running on 80");
 const path = require("path");
 
 const publicDir = path.join(__dirname, "../public");

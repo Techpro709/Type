@@ -1,9 +1,9 @@
-import Terminal from './Terminal.js';
-import MasterBranch from './MasterBranch.js';
-import PlayersHandler from './PlayersHandler.js';
-import CountDown from './CountDown.js';
+import Terminal from "./Terminal.js";
+import MasterBranch from "./MasterBranch.js";
+import PlayersHandler from "./PlayersHandler.js";
+import CountDown from "./CountDown.js";
 
-const socket = io.connect('http://localhost:4000');
+const socket = io.connect("http://localhost:80");
 const playersHandler = new PlayersHandler();
 let terminal;
 let masterBranch;
@@ -25,7 +25,9 @@ window.onresize = function () {
 window.draw = function () {
   background(14, 16, 18);
   if (playersHandler.getPlayer(socket.id)) {
-    terminal.updatePlayerCurrentLetter(playersHandler.getPlayer(socket.id).currentIndex);
+    terminal.updatePlayerCurrentLetter(
+      playersHandler.getPlayer(socket.id).currentIndex
+    );
   }
 
   terminal.draw();
@@ -37,15 +39,17 @@ window.draw = function () {
 window.keyPressed = function (e) {
   e.preventDefault();
   terminal.wrongLetter = false;
-  socket.emit('keyPressed', key);
+  socket.emit("keyPressed", key);
 };
 
-function registerSocketHandlers () {
-  socket.on('sentence', sentence => terminal.updateSentence(sentence));
-  socket.on('heartbeat', players => playersHandler.updatePlayers(players));
-  socket.on('disconnect', playerId => playersHandler.removePlayer(playerId));
-  socket.on('wrongLetter', () => { terminal.wrongLetter = true; });
-  socket.on('restart', () => {
+function registerSocketHandlers() {
+  socket.on("sentence", (sentence) => terminal.updateSentence(sentence));
+  socket.on("heartbeat", (players) => playersHandler.updatePlayers(players));
+  socket.on("disconnect", (playerId) => playersHandler.removePlayer(playerId));
+  socket.on("wrongLetter", () => {
+    terminal.wrongLetter = true;
+  });
+  socket.on("restart", () => {
     playersHandler.resetPlayers();
     countDown.beginGameStarting();
   });
