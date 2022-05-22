@@ -3,9 +3,12 @@ const socket = require("socket.io");
 const app = express();
 const GameEngine = require("./GameEngine");
 
+const PORT = process.env.PORT || 3000;
 const gameEngine = new GameEngine();
-const server = app.listen(80);
-console.log("Server running on 80");
+const server = app.listen(PORT, (err) => {
+  if (err) throw err;
+  console.log("%c Server running", "color: green");
+});
 const path = require("path");
 
 const publicDir = path.join(__dirname, "../public");
