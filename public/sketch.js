@@ -3,7 +3,9 @@ import MasterBranch from "./MasterBranch.js";
 import PlayersHandler from "./PlayersHandler.js";
 import CountDown from "./CountDown.js";
 
-const socket = io.connect("http://localhost:80");
+const PORT = process.env.PORT;
+
+const socket = io.connect(`http://devzpersonalwebpage.herokuapp.com`);
 const playersHandler = new PlayersHandler();
 let terminal;
 let masterBranch;
